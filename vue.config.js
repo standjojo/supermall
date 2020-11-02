@@ -6,10 +6,12 @@ module.exports = {
         'assets': '@/assets',
         'common': '@/common',
         'components': '@/components',
-        'views': '@/views'
+        'views': '@/views',
+        'network': '@/network'
       }
     }
-  }
+  },
+  publicPath: './'
 }
 
 

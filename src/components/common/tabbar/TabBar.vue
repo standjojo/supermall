@@ -17,6 +17,7 @@ export default {
   background: #f6f6f6;
 
   position: fixed;
+  z-index: 10;
   bottom: 0;
   left: 0;
   right: 0;
