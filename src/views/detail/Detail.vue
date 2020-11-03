@@ -113,16 +113,20 @@ export default {
       })
       let titleY = themeTopYs[themeTopYs.length - 1] || 0
       this.isActive = this.themeTopYs.indexOf(titleY)
+      this.backTopShow = (-position.y) > 1000
     },
     backClick() {
       this.$refs.scroll.scrollTo(0, 0, 500);
     },
-    scrollPosition(position) {
-      this.backTopShow = (-position.y) > 1000
-    },
     // 加入购物车
     addToCart() {
-      
+      // 添加购物车需要展示的信息
+      const product = {}
+      product.image = this.detailSwiper[0]
+      product.title = this.baseInfo.title
+      product.price = this.baseInfo.realPrice
+      product.iid = this.iid
+      this.$store.commit('addToCart', product)
     }
   },
   created() {

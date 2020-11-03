@@ -2,8 +2,7 @@
   <div id="cart">
     <nav-bar class="nav-bar"><div slot="center">购物车({{cartCount}})</div></nav-bar>
     <cart-list class="cart-list" :cart-list="cartList"></cart-list>
-    <bottom-bar></bottom-bar>
-    <!-- <h2>Cart</h2> -->
+    <bottom-bar :cart-list="cartList"></bottom-bar>
   </div>
 </template>
 
@@ -22,10 +21,10 @@
     },
     computed: {
 		  cartList() {
-		    // return this.$store.getters.cartList
+		    return this.$store.state.cartList
       },
       cartCount() {
-		    // return this.$store.getters.cartCount
+		    return this.$store.getters.cpuCartCount
       }
     }
 	}

@@ -1,6 +1,6 @@
 <template>
   <div class="bottom-menu">
-    <CheckButton class="select-all" @checkBtnClick="checkBtnClick" v-model="isSelectAll"></CheckButton>
+    <CheckButton class="select-all" @changeChecked="changeChecked" :value="isSelectAll"></CheckButton>
     <span>全选</span>
     <span class="total-price">合计: ¥{{totalPrice}}</span>
     <span class="buy-product">去计算({{$store.getters.cartCount}})</span>
@@ -11,38 +11,41 @@
   import CheckButton from './CheckButton'
 
 	export default {
-		name: "BottomBar",
+    name: "BottomBar",
+    props: {
+      cartList: {
+        type: Array,
+        default() {
+          return []
+        }
+      }
+    },
     components: {
 		  CheckButton
     },
     computed: {
 		  totalPrice() {
-        // const cartList = this.$store.getters.cartList;
-        // return cartList.filter(item => {
-        //   return item.checked
-        // }).reduce((preValue, item) => {
-        //   return preValue + item.count * item.newPrice
-        // }, 0).toFixed(2)
+        if (this.cartList.length === 0) {
+          return 
+        }
+        let sum = 0
+        this.cartList.forEach(item => {
+          if (item.checked) {
+            sum += item.price * item.num
+          }
+        })
+        return sum
       },
-      isSelectAll: function () {
-        // return this.$store.getters.cartList.find(item => item.checked === false) === undefined;
+      isSelectAll() {
+        return this.$store.state.cartList.find(item => !item.checked) === undefined;
       }
     },
     methods: {
-      checkBtnClick: function () {
+      changeChecked() {
         // 1.判断是否有未选中的按钮
-        // let isSelectAll = this.$store.getters.cartList.find(item => !item.checked);
-
+        let isSelectAll = this.$store.state.cartList.find(item => !item.checked) !== undefined;
         // 2.有未选中的内容, 则全部选中
-        // if (isSelectAll) {
-        //   this.$store.state.cartList.forEach(item => {
-        //     item.checked = true;
-        //   });
-        // } else {
-        //   this.$store.state.cartList.forEach(item => {
-        //     item.checked = false;
-        //   });
-        // }
+        this.$store.commit('selectAll', isSelectAll)
       }
     }
 	}

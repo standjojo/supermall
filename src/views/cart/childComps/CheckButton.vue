@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div class="icon-selector" :class="{'selector-active': checked}" @click="selectItem">
+      <div @click="changeChecked" class="icon-selector" :class="{'selector-active': value}">
         <img src="~/assets/img/cart/tick.svg" alt="">
       </div>
     </div>
@@ -12,22 +12,14 @@
     props: {
 		  value: {
 		    type: Boolean,
-        default: true
-      }
-    },
-    data: function () {
-		  return {
-		    checked: this.value
+        default() {
+          return false
+        }
       }
     },
     methods: {
-      selectItem: function () {
-        this.$emit('checkBtnClick')
-      }
-    },
-    watch: {
-		  value: function (newValue) {
-        this.checked = newValue;
+      changeChecked() {
+        this.$emit('changeChecked')
       }
     }
 	}
